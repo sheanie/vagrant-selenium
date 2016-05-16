@@ -5,7 +5,7 @@
 echo "Install the packages..."
 #=========================================================
 sudo apt-get update
-sudo apt-get -y install fluxbox xorg unzip vim default-jre rungetty firefox
+sudo apt-get -y install fluxbox xorg unzip vim default-jre rungetty firefox phantomjs
 
 #=========================================================
 echo "Set autologin for the Vagrant user..."
@@ -57,10 +57,11 @@ TMUX_SCRIPT=$(cat <<EOF
 tmux start-server
 
 tmux new-session -d -s selenium
-tmux send-keys -t selenium:0 './chromedriver' C-m
+tmux send-keys -t selenium:0 'java -jar selenium-server-standalone.jar' C-m
 
-tmux new-session -d -s chrome-driver
-tmux send-keys -t chrome-driver:0 'java -jar selenium-server-standalone.jar' C-m
+tmux new-session -d -s chromedriver
+tmux send-keys -t chromedriver:0 './chromedriver' C-m
+
 EOF
 )
 echo "${TMUX_SCRIPT}"
